@@ -1,1 +1,0 @@
-# malki.tech
