@@ -10,8 +10,8 @@ const cols = canvas.width / pixelSize;
 
 let color = '#ffffff';
 
-function drawPixel(x, y) {
-  ctx.fillStyle = color;
+function drawPixel(x, y, c) {
+  ctx.fillStyle = c;
   ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
 }
 
@@ -24,10 +24,16 @@ function getCursorPosition(canvas, event) {
 
 canvas.addEventListener('click', (event) => {
   const [x, y] = getCursorPosition(canvas, event);
-  drawPixel(x, y);
+  socket.emit('drawPixel', {x: x, y: y, color: color});
 });
 
 const colorInput = document.getElementById('color');
 colorInput.addEventListener('change', (event) => {
   color = event.target.value;
+});
+
+const socket = io('https://your-github-username.github.io');
+
+socket.on('drawPixel', (data) => {
+  drawPixel(data.x, data.y, data.color);
 });
