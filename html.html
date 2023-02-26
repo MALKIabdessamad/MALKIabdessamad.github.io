@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pixel Art Game</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		canvas {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: black;
+		}
+		.color-picker {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<div class="color-picker">
+		<input type="color" id="color" value="#ffffff">
+	</div>
+	<script src="script.js"></script>
+</body>
+</html>

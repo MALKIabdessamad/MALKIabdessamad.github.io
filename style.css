@@ -1,0 +1,13 @@
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+}
+
+.color-picker {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
