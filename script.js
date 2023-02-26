@@ -1,6 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
+firebase.initializeApp(firebaseConfig);
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -10,9 +10,10 @@ const cols = canvas.width / pixelSize;
 
 let color = '#ffffff';
 
-function drawPixel(x, y, c) {
-  ctx.fillStyle = c;
+function drawPixel(x, y, color) {
+  ctx.fillStyle = color;
   ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+  firebase.database().ref('pixels/' + x + '-' + y).set(color);
 }
 
 function getCursorPosition(canvas, event) {
@@ -22,9 +23,10 @@ function getCursorPosition(canvas, event) {
   return [x, y];
 }
 
+
 canvas.addEventListener('click', (event) => {
   const [x, y] = getCursorPosition(canvas, event);
-  socket.emit('drawPixel', {x: x, y: y, color: color});
+  drawPixel(x, y, color);
 });
 
 const colorInput = document.getElementById('color');
@@ -32,8 +34,8 @@ colorInput.addEventListener('change', (event) => {
   color = event.target.value;
 });
 
-const socket = io('https://MALKIabdessamad.github.io');
-
-socket.on('drawPixel', (data) => {
-  drawPixel(data.x, data.y, data.color);
+firebase.database().ref('pixels').on('child_added', (snapshot) => {
+  const [x, y] = snapshot.key.split('-').map(Number);
+  const color = snapshot.val();
+  drawPixel(x, y, color);
 });
