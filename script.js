@@ -32,7 +32,7 @@ colorInput.addEventListener('change', (event) => {
   color = event.target.value;
 });
 
-const socket = io('https://your-github-username.github.io');
+const socket = io('https://MALKIabdessamad.github.io');
 
 socket.on('drawPixel', (data) => {
   drawPixel(data.x, data.y, data.color);
